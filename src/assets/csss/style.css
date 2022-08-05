@@ -1,0 +1,22 @@
+@import url("https://fonts.googleapis.com/css?family=Noto+Sans:400,700|Karla:400,700");
+/*******************
+    1.General
+*******************/
+body {
+  font-family: "Noto Sans", sans-serif;
+  font-size: 14px;
+  background-color: #ffffff;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Karla", sans-serif;
+  font-weight: 600;
+}
+h5{
+    font-size: 1.25rem;
+}

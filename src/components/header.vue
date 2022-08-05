@@ -125,10 +125,7 @@ export default {
         z-index:100000;
     }
     nav{
-    
-     
-      height:100%;
-      box-sizing: border-box;
+    box-sizing: border-box;
       display: flex;
       justify-content: space-between;
     }

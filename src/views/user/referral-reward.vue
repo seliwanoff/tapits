@@ -17,7 +17,7 @@
                     <div class="ech-refer">
                         <div class="tet-refer">
                             <span style="color:#0A1AA8;font-weight:800">Total Reward</span>
-                          <h6>&#8358;{{length }}</h6>
+                          <h6 >&#8358;{{totalEr  }}</h6>
                         </div>
                         
                     </div>
@@ -43,9 +43,12 @@
                             <div class="info-rfer-user" v-for="item in refferds" :key="item.id">
                                 <div class="info-pix-name">
                                     <span class="fa fa-user"></span>
-                                    <span class="nhy-ck">{{item.name}}</span>
+                                    <span class="nhy-ck">{{item.fname}} {{item.lname}}</span>
+                                    <br>
+                                    <span style="font-size:.8rem;margin-left:30px;display:inherit">{{moment(item.updated_at).format('DD-MM-YYYY')}}</span>
+                                    
                                 </div>
-                                <span class="nhy-ck" style="display:inline-block;margin-top:10px">&#8358;{{item.price}}</span>
+                                <span class="nhy-ck" style="display:inline-block;margin-top:10px">&#8358;{{item.er}}</span>
                             </div>
                        </div>
                        <div v-else  style="text-align:center;font-size:1rem">{{text}}</div>
@@ -65,6 +68,7 @@ import Header2 from '../../components/header.vue'
 import Message from '../../components/message.vue'
 import axios from 'axios'
 import Loading from 'vue-loading-overlay';
+import moment from 'moment'
 import 'vue-loading-overlay/dist/vue-loading.css'
 export default {
     name:'Reward-app',
@@ -83,7 +87,9 @@ export default {
             text:'No referral yet',
             isLoading: true,
             fullPage: true,
-            color:'#0A1AA8'
+            color:'#0A1AA8',
+            moment:moment,
+            totalEr :0
 
         }
     },
@@ -124,11 +130,27 @@ export default {
                     Authorization:"Bearer "+ this.token
                 }
             })
-          
+          console.log(refer)
           this.length = refer.data.data.length
           this.refferds = refer.data.data
+          var i;
+          for(i=0; i<this.length ; i++){
+            this.totalEr = this.totalEr + parseInt(this.refferds[i].er)
+            console.log(i)
+            console.log(this.totalEr)
+          }
+        /* var i=0
+        while(i<=this.length){
+           console.log(i)
+            
+            this.totalEr+=parseInt(this.refferds[i++].er)
+            
+        }
+        */
+            
          }
         catch(e){
+            console.log(e)
             if(e.response.status==400 || e.response.status==422){
                    this.text = 'Error Fetching Referral, Kindly refresh'
                  
@@ -340,9 +362,9 @@ export default {
    .inf-ref{
     border:1px solid #ccc;
     background: #d1d2d4;
-    padding:10px;
+   
     margin-top:5px;
-    border-radius:10px;
+   
     min-height: 300px;
    }
    .ech-spc-link{

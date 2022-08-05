@@ -19,6 +19,7 @@ import Payment3 from '../views/makepayment/payment3.vue'
 import Payment4 from '../views/makepayment/paymentwithschedule.vue'
 import Payment5 from '../views/makepayment/datawithschedule.vue'
 import Send from '../views/makepayment/sendmoney.vue'
+import Home from '../views/home.vue'
 
 import Settings from '../views/setting/user-settings.vue'
 import Edit from '../views/setting/edit-profile.vue'
@@ -176,6 +177,11 @@ const routes = [{
         path: '/forget/resetpassword',
         name: 'TAPIT | Reset Password',
         component: ResetPassword
+    },
+    {
+        path: '/',
+        name: 'Tapit | Home',
+        component: Home
     },
 
 ]

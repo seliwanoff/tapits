@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <header>
-            <nav>
+            <div class="nav">
                 <div class="left-side-con">
                     <div class="hidden-icon onhover-show">
                         <span class="fa fa-angle-left hiddenicon"  @click="closeDrop"></span>
@@ -29,7 +29,7 @@
 
                     </div>
                 </div>
-            </nav>
+            </div>
         </header>
          
     </div>
@@ -57,7 +57,7 @@ export default {
     },
 }
 </script>
-<style>
+<style scoped>
     .container{
         max-width:1519.20px;
         margin:0px auto;
@@ -69,11 +69,8 @@ export default {
         box-shadow: 0px 2px 30px 2px rgb(0 0 0 / 10%);
         height: 70px;
     }
-    nav{
-    
-     
-      height:100%;
-      box-sizing: border-box;
+    .nav{
+        box-sizing: border-box;
       display: flex;
       justify-content: space-between;
     }

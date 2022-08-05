@@ -17,7 +17,7 @@
                     <div class="ech-refer">
                         <div class="tet-refer">
                             <span>Total Reward</span>
-                          <h6>&#8358;{{length }}</h6>
+                          <h6>&#8358;{{totalEr }}</h6>
                         </div>
                         <span class="fa fa-angle-right"></span>
                     </div>
@@ -108,7 +108,8 @@ export default {
             length:0,
              isLoading: true,
             fullPage: true,
-            color:'#0A1AA8'
+            color:'#0A1AA8',
+             totalEr :0
 
         }
     },
@@ -143,7 +144,7 @@ export default {
          }
         catch(e){
             console.log(e)
-        }
+        } 
          try{
             const refer = await axios.get(`${process.env.VUE_APP_BASE_URL}api/getrefer`,{
                headers: {
@@ -152,6 +153,13 @@ export default {
             })
           console.log(refer)
           this.length = refer.data.data.length
+          this.refferds = refer.data.data
+            var i;
+          for(i=0; i<this.length ; i++){
+            this.totalEr = this.totalEr + parseInt(this.refferds[i].er)
+            console.log(i)
+            console.log(this.totalEr)
+          }
          }
         catch(e){
             console.log(e)
