@@ -5,10 +5,8 @@
     <aside v-show="hideme">
         <div class="side-main-bar">
             <ul>
-                <li class="width:100%;height:80px !important;border:1px solid black" >
-               
-                </li>
-                <li class="width:100%;border:1px solid black;margin-top:40px" >
+              
+                <li class="width:100%;border:1px solid black;margin-top:40px" style="margin-top:30px">
                 <router-link to="/account/dashboard" style="width:100%;display:flex;justify-content:space-between" active-class="bd-l">
                  <span class="menu-item">
                   <span class="chl-ck">
@@ -135,7 +133,19 @@
                    
                 </router-link>
                 </li>
-               
+                <li class="width:100%;border:1px solid black" v-if="usertype==2">
+                <router-link to="/service/api" style="width:100%;display:flex;justify-content:space-between" active-class="bd-l">
+                 <span class="menu-item"> 
+                  <span class="chl-ck">
+                    <span class="fa fa-globe icon-menu"></span>
+                 </span>
+                 
+                 
+                 API</span>
+               <span class="fa fa-angle-right icon-menu"></span>
+                   
+                </router-link>
+                </li>
                 <li class="width:100%;border:1px solid black">
                 <a href="javascript:void(0)" @click="logOut" style="width:100%;display:flex;justify-content:space-between">
                  <span class="menu-item">
@@ -166,6 +176,7 @@ export default {
     data() {
         return {
             token:'',
+            usertype:'',
         }
     },
     methods: {
@@ -188,6 +199,24 @@ export default {
            
         }
     },
+    async mounted(){
+            const data = JSON.parse(localStorage.getItem("user"));
+            this.token = data.data.token;
+            try {
+            const user = await axios.get(`${process.env.VUE_APP_BASE_URL}api/getdatils`, {
+            headers: {
+            Authorization: "Bearer " + this.token,
+            },
+            });
+           
+            this.usertype = user.data.data.type;
+
+
+
+            } catch (e) {
+            console.log(e);
+            }
+    }
     
 }
 </script>
@@ -223,13 +252,17 @@ ul{
     overflow-y: hidden;
     margin-top:40px;
     overflow: auto;
+    height:100%
    
+}
+ul::-webkit-scrollbar{
+    width:0px;
 }
 ul li{
     
     display:flex;
     justify-content:space-between;
-    height:38px;
+    height:33px;
     padding:5px
    
 }

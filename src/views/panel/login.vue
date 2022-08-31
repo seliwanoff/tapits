@@ -11,8 +11,8 @@
                 <form @submit.prevent="handleSubmit">
                     
                     <div class="ml-xf">
-                        <label for="email">Email or Username</label> <br>
-                         <input type="id" placeholder="Enter your Email or Username" v-model="id" required>
+                        <label for="email">Email or Username or Number</label> <br>
+                         <input type="id" placeholder="Enter your Email or Username or Number" v-model="id" required>
                     </div>
                     
                      <div class="ml-xf">

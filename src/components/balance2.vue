@@ -144,7 +144,9 @@
                         item.reciever,
                         item.name,
                         item.user,
-                        item.type
+                        item.type,
+                        item.commission,
+                        item.plan
                       )
                     "
                   >
@@ -218,7 +220,7 @@
                         margin-right: 20px;
                         border-radius: 100%;
                       "
-                      v-else-if="item.type == 4 && item.network != item.user"
+                      v-else-if="item.type == 4 && item.network == userId"
                     />
                     <img
                       src="../assets/image/delivered.png"
@@ -230,7 +232,7 @@
                         margin-right: 20px;
                         border-radius: 100%;
                       "
-                      v-else-if="item.type == 4 && item.network == item.user"
+                      v-else-if="item.type == 4 && item.network != userId"
                     />
                     <img
                       src="../assets/image/aedc.jpg"
@@ -418,8 +420,11 @@
                         <span v-if="item.plan != null && item.type == 8">Commission</span>
                         <span v-else-if="item.plan != null && item.type == 6"
                           >Wallet Fund</span
+                        ><span v-else-if="item.plan != null && item.type == 10"
+                          >Account Upgrade</span
                         >
-                        <span v-else>{{ item.name }}</span>
+                        <span v-else-if="item.type== 4">{{ item.plan }}</span>
+                        <span v-else>{{item.name}}</span>
                         <span>&#8358;{{ Intl.NumberFormat().format(item.amount) }}</span>
                       </div>
                       <div class="dwn-tpg">
@@ -431,6 +436,7 @@
                               item.type == '5' ||
                               item.type == 8 ||
                               item.type == 6 ||
+                              item.type == 10 ||
                               (item.type == '1' && item.status == 1))
                           "
                           style="color: green"
@@ -439,16 +445,16 @@
 
                         <span
                           v-else-if="
-                            item.network != item.user &&
+                            item.network != userId &&
                             item.type == '4' &&
                             item.status == 1
                           "
-                          style="color: green"
-                          >Deliverd</span
+                          
+                          >Sent</span
                         >
                         <span
                           v-else-if="
-                            item.network == item.user &&
+                            item.network == userId &&
                             item.type == '4' &&
                             item.status == 1
                           "
@@ -457,7 +463,7 @@
                         >
                         <span v-else style="color: crimson">Failed</span>
 
-                        <span>{{ moment(item.updated_at).format("DD-MM-YYYY") }}</span>
+                        <span>{{ moment(item.updated_at).format("DD-MM-YYYY hh:mm") }}</span>
                       </div>
                     </div>
                   </div>
@@ -494,6 +500,7 @@
                         item.time,
                         item.fr,
                         item.plan
+
                       )
                     "
                   >
@@ -621,6 +628,7 @@ export default {
       selected: "Transaction",
       dragout: true,
       date: "",
+      userId:''
     };
   },
 
@@ -635,7 +643,7 @@ export default {
     setSelected(tab) {
       this.selected = tab;
     },
-    getEachTransaction(ref, status, amount, network, date, reciever, name, user, type) {
+    getEachTransaction(ref, status, amount, network, date, reciever, name, user, type,commission,plan) {
       const data = {
         ref: ref,
         status: status,
@@ -646,6 +654,8 @@ export default {
         name: name,
         user: user,
         type: type,
+        commission:commission,
+        plan:plan
       };
       localStorage.setItem("data", JSON.stringify(data));
 
@@ -714,6 +724,7 @@ export default {
   async mounted() {
     const data = JSON.parse(localStorage.getItem("user"));
     this.token = data.data.token;
+    this.userId = data.data.data.id
     try {
       const transaction = await axios.get(
         `${process.env.VUE_APP_BASE_URL}api/gettransaction`,
@@ -723,8 +734,9 @@ export default {
           },
         }
       );
-
+     
       this.transactions = transaction.data.data.reverse();
+     
     } catch (e) {
       e;
     }

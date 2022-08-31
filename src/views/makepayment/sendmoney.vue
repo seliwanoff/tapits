@@ -94,21 +94,6 @@ export default {
       this.isDisabled = true;
       this.btnText = "Loading";
 
-      /* const data ={
-                plan_id: this.plan_id,
-                network_id:this.network_id,
-                phone :this.phone,
-                type:this.type,
-                amount:this.amount
-                
-              
-            }
-          
-           /* const datas  = JSON.parse(localStorage.getItem('user'));
-            this.token = datas.data.token
-           */
-
-      // if(response.data.data.status==true){
       const data = {
         reciever: this.receipt, //.slice(1),
         type: this.type,
@@ -148,6 +133,10 @@ export default {
           this.interval = setTimeout(() => {
             this.status = null;
           }, 3000);
+        } else if (e.response.status === 401) {
+          if (e.response.status === 401) {
+            this.$router.push("/panel/login");
+          }
         } else {
           this.status = false;
           this.message = "Connection problem, try checking your network";
@@ -158,46 +147,6 @@ export default {
           }, 3000);
         }
       }
-
-      /*
-
-             }else{
-                this.status= false,
-                this.message = 'Something went wrong'
-                this.isDisabled =false
-                 this.interval = setTimeout(()=>{
-                    this.status = null
-                      this.btnText = 'Payment'
-                      
-                       
-                  },3000)
-             }
-            }
-            
-            catch(e){
-               if(e.response.status==400 || e.response.status==422){
-                     this.isDisabled =false
-                    this.status= false
-                     this.message = e.response.data.message
-                  this.btnText = 'Payment'
-                   this.isDisabled=false
-                   this.interval = setTimeout(()=>{
-                    this.status = null
-                       
-                     },3000)
-                }else{
-                    this.status= false
-                     this.message = 'Connection problem, try checking your network'
-                      this.isDisabled=false
-                       this.interval = setTimeout(()=>{
-                    this.status = null
-                      this.btnText = 'Payment'
-                       
-                     },3000)
-                }
-            }
-
-        */
     },
   },
 

@@ -163,7 +163,9 @@ export default {
 
         this.mtnapi = mtnapi.data.data.mtnapi;
       } catch (e) {
-        e;
+        if (e.response.status === 401) {
+          this.$router.push("/panel/login");
+        }
       }
       if (index == 1 && this.mtnapi == 1) {
         const data = JSON.parse(localStorage.getItem("user"));
@@ -222,20 +224,6 @@ export default {
             this.setTimeout = setTimeout(() => {
               this.$router.replace("/makepayment/datawithschedule");
             }, 3000);
-            /*const datas  = JSON.parse(localStorage.getItem('user'))
-               this.token = datas.data.token
-              try{
-                const response = await axios.post(`${process.env.VUE_APP_BASE_URL}api/scheadule`,data,{
-                  headers:{
-                    Authorization: "Bearer "+ this.token
-                  }
-                })
-                console.log(response)
-               
-              }catch(e){
-                console.log(e)
-              } 
-               */
           } else {
             const data = {
               network_id: this.network.networkid,
@@ -284,7 +272,9 @@ export default {
 
       this.balance = parseInt(user.data.data.balance);
     } catch (e) {
-      console.log(e);
+      if (e.response.status === 401) {
+        this.$router.push("/panel/login");
+      }
     }
     this.isLoading = false;
   },

@@ -179,6 +179,10 @@ export default {
             this.interval = setTimeout(() => {
               this.status = null;
             }, 3000);
+          } else if (e.response.status === 401) {
+            if (e.response.status === 401) {
+              this.$router.push("/panel/login");
+            }
           } else {
             this.status = false;
             this.message = "Connection problem, try checking your network";
@@ -197,72 +201,6 @@ export default {
         this.status = null;
         this.btnText = "Payment";
       }, 3000);
-      //const current = new Date();
-      /*
-            const data ={
-                request_id: moment(current).format('YYYYMMDDHHm'),
-                serviceID:this.serviceID,
-                billersCode :this.billersCode,
-                variation_code:this.variation_code,
-                amount:this.amount,
-                phone:this.phone,
-              
-            }
-          
-           
-             const string = 'Basic ' + btoa('iy6935781@gmail.com:1234567')
-            try{
-                const response = await axios.post(`https://sandbox.vtpass.com/api/pay`,data,
-                 {
-                        headers: {
-                            Authorization: string
-                        }
-                    }
-                )
-              
-             if(response.data.code=='000'){
-              */
-
-      /*
-             }else{
-                 this.status= false,
-                this.message = 'Something went wrong'
-                this.isDisabled =false
-                 this.interval = setTimeout(()=>{
-                    this.status = null
-                      this.btnText = 'Payment'
-                      
-                       
-                  },3000)
-             }
-           
-            }
-            catch(e){
-              if(e.response.status==400 || e.response.status==422){
-                     this.isDisabled =false
-                    this.status= false
-                     this.message = e.response.data.message
-                  this.btnText = 'Payment'
-                   this.isDisabled=false
-                   this.interval = setTimeout(()=>{
-                    this.status = null
-                       
-                     },3000)
-                }else{
-                    this.status= false
-                     this.message = 'Connection problem, try checking your network'
-                      this.isDisabled=false
-                       this.interval = setTimeout(()=>{
-                    this.status = null
-                      this.btnText = 'Payment'
-                       
-                     },3000)
-                }
-            }
-
-        
-        
-        }*/
     },
   },
 
@@ -279,7 +217,9 @@ export default {
 
       this.usertype = user.data.data.type;
     } catch (e) {
-      e;
+      if (e.response.status === 401) {
+        this.$router.push("/panel/login");
+      }
     }
     const billdata = JSON.parse(localStorage.getItem("bill"));
     this.amount = parseInt(billdata.amount);
@@ -312,7 +252,9 @@ export default {
       }
       this.isLoading = false;
     } catch (e) {
-      e.response;
+      if (e.response.status === 401) {
+        this.$router.push("/panel/login");
+      }
     }
   },
   async beforeCreate() {
@@ -332,7 +274,9 @@ export default {
 
       this.usertype = user.data.data.type;
     } catch (e) {
-      e;
+      if (e.response.status === 401) {
+        this.$router.push("/panel/login");
+      }
     }
   },
 };

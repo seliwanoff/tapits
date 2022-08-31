@@ -71,7 +71,7 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12">
-                        <ul class="nav nav-pills nav-justified features-tab mb-5" id="pills-tab" role="tablist">
+                        <ul class="nav nav-pills nav-justified features-tab mb-5" id="pills-tab" role="tablist" style="height:auto !important">
                             <li class="nav-item">
                                 <a class="nav-link" id="pills-code-tab" data-toggle="pill" href="#pills-code" role="tab" aria-controls="pills-code" aria-selected="true">
                                     <div class="clearfix">

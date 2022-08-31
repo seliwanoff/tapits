@@ -52,8 +52,10 @@
       <aside v-show="hidemes">
         <div class="side-main-bar">
           <ul>
-            <li class="width:100%;height:80px !important;border:1px solid black"></li>
-            <li class="width:100%;border:1px solid black;margin-top:40px">
+            <li
+              class="width:100%;border:1px solid black;margin-top:40px"
+              style="margin-top: 25px"
+            >
               <router-link
                 to="/account/dashboard"
                 style="width: 100%; display: flex; justify-content: space-between"
@@ -205,7 +207,22 @@
                 <span class="fa fa-angle-right icon-menu"></span>
               </router-link>
             </li>
+            <li class="width:100%;border:1px solid black" v-if="usertype == 2">
+              <router-link
+                to="/service/api"
+                style="width: 100%; display: flex; justify-content: space-between"
+                active-class="bd-l"
+              >
+                <span class="menu-item">
+                  <span class="chl-ck">
+                    <span class="fa fa-globe icon-menu"></span>
+                  </span>
 
+                  API</span
+                >
+                <span class="fa fa-angle-right icon-menu"></span>
+              </router-link>
+            </li>
             <li class="width:100%;border:1px solid black">
               <a
                 href="javascript:void(0)"
@@ -252,12 +269,13 @@ export default {
       letdrops: "",
       hidemes: true,
       image: null,
-      url: "https://tap.150psi.com/public/storage/images/",
+      url: "https://api.tapit.ng/public/storage/images/",
       isLoading: true,
       fullPage: true,
       color: "#0A1AA8",
       fn: "",
       commission: "",
+      usertype: "",
     };
   },
   methods: {
@@ -282,7 +300,9 @@ export default {
         localStorage.removeItem("user");
         this.$router.push("/panel/login");
       } catch (e) {
-        console.log(e);
+        if (e.response.status === 401) {
+          this.$router.push("/panel/login");
+        }
       }
     },
   },
@@ -303,6 +323,7 @@ export default {
           Authorization: "Bearer " + this.token,
         },
       });
+      this.usertype = user.data.data.type;
       this.balance = user.data.data.balance;
       this.username = user.data.data.username;
       this.fn = user.data.data.username.charAt(0);
@@ -317,61 +338,20 @@ export default {
             Authorization: "Bearer " + this.token,
           },
         });
-        /*   this.accessToken = auth.data.data.responseBody.accessToken
-
-                
-               
-                const current = new Date()
-                const bankdata = {
-                    accountReference: moment(current).format('YYYYMMDDHHm'),
-                    accountName: user.data.data.fname +" "+  user.data.data.lname,
-                    customerEmail: user.data.data.email,
-                    currencyCode: "NGN",
-                    contractCode: "444802260620",
-                    customerName:  user.data.data.fname + " "+ user.data.data.lname,
-                    getAllAvailableBanks: "false",
-                    preferredBanks: ["035"]
-                }
-                const bank = await axios.post('https://api.monnify.com/api/v2/bank-transfer/reserved-accounts',bankdata,{
-                    headers:{
-                       Authorization:"Bearer "+ this.accessToken
-                    }
-                })
-              
-                */
-        /* if(bank.data.requestSuccessful){
-                    const bankp = {
-                    accountName: bank.data.responseBody.accounts[0].accountName,
-                    bank: bank.data.responseBody.accounts[0].accountNumber,
-                    mref:bank.data.responseBody.reservationReference,
-                    ref:bank.data.responseBody.accountReference,
-                    bankcode: bank.data.responseBody.accounts[0].bankCode,
-                    bankname:bank.data.responseBody.accounts[0].bankName,
-                }
-                 const data  = JSON.parse(localStorage.getItem('user'));
-                 this.token = data.data.token
-              
-                 await axios.post(`${process.env.VUE_APP_BASE_URL}api/updatebank`,bankp,{
-                        headers: {
-                        Authorization:"Bearer "+ this.token
-                    }
-                })
-             
-                }*/
       }
     } catch (e) {
-      console.log(e);
+      if (e.response.status === 401) {
+        this.$router.push("/panel/login");
+      }
     }
     this.isLoading = false;
   },
-   async beforeCreate() {
+  async beforeCreate() {
     const user = localStorage.getItem("user");
 
-
-    if(user==null){
-      this.$router.push('/panel/login')
+    if (user == null) {
+      this.$router.push("/panel/login");
     }
-  
   },
 };
 </script>
@@ -395,7 +375,6 @@ header {
   z-index: 100000;
 }
 nav {
- 
   box-sizing: border-box;
   display: flex;
   justify-content: space-between;
@@ -520,11 +499,12 @@ ul {
   font-weight: 400;
   overflow-y: hidden;
   margin-top: 40px;
+  overflow: scroll;
+  height: 100%;
 }
 ul li {
   display: flex;
   justify-content: space-between;
-  height: 45px;
 }
 .menu-item {
   font-size: 0.9rem;

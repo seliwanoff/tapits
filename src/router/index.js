@@ -13,6 +13,7 @@ import Deposit from '../views/fund/deposit.vue'
 import Account from '../views/fund/account.vue'
 import Bill from '../views/service/bill.vue'
 import Cable from '../views/service/cable.vue'
+import API from '../views/service/api.vue'
 import Payment from '../views/makepayment/payment.vue'
 import Payment2 from '../views/makepayment/payment2.vue'
 import Payment3 from '../views/makepayment/payment3.vue'
@@ -96,6 +97,11 @@ const routes = [{
         path: '/service/cable',
         name: 'TAPIT | Cable',
         component: Cable
+    },
+    {
+        path: '/service/api',
+        name: 'TAPIT | API',
+        component: API
     },
     {
         path: '/makepayment/payment',

@@ -173,6 +173,10 @@ export default {
                 this.interval = setTimeout(() => {
                   this.status = null;
                 }, 3000);
+              } else if (e.response.status === 401) {
+                if (e.response.status === 401) {
+                  this.$router.push("/panel/login");
+                }
               } else {
                 this.status = false;
                 this.message = "Connection problem, try checking your network";
@@ -193,6 +197,10 @@ export default {
               this.interval = setTimeout(() => {
                 this.status = null;
               }, 3000);
+            } else if (e.response.status === 401) {
+              if (e.response.status === 401) {
+                this.$router.push("/panel/login");
+              }
             } else {
               this.status = false;
               this.message = "Connection problem, try checking your network";

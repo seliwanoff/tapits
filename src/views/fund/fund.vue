@@ -118,28 +118,26 @@ export default {
     payWithMonnify() {
       this.scriptLoaded &&
         this.scriptLoaded.then(() => {
-          const monnifyOptions = {
+          window.MonnifySDK.initialize({
             amount: this.amount,
             currency: this.currency,
             reference: this.reference,
             customerName: this.customerName,
             customerEmail: this.customerEmail,
             customerMobileNumber: this.customerMobileNumber,
-            apiKey: "MK_PROD_2ZB5Q9MJ85",
-            contractCode: "444802260620",
-            paymentDescription: this.paymentDescription,
+            apiKey: "MK_PROD_F8VLZV1JBU",
+            contractCode: "151124671166",
+            paymentDescription: "Wallet Funding",
             isTestMode: this.isTestMode,
             onComplete: () => {
-             this.$router.go();
+              this.$router.go();
             },
             onClose: () => {
-             
               this.$router.go();
             },
             metadata: this.metadata,
             paymentMethods: this.paymentMethods,
-          };
-          window.MonnifySDK.initialize(monnifyOptions);
+          });
         });
     },
   },

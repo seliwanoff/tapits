@@ -20,6 +20,7 @@
     "vue-loader": "^17.0.0",
     "vue-loading-overlay": "5.0",
     "vue-moment": "^4.1.0",
+    "vue-monnify": "^1.0.1",
     "vue-router": "^4.0.13",
     "vue-slick-carousel": "^1.0.6",
     "vue-split-carousel": "^2.2.3",

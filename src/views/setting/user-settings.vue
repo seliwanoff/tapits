@@ -48,11 +48,7 @@
                     <strong v-if="type == 1">Normal </strong>
                     <strong v-if="type == 2">Merchant </strong>
                   </div>
-                  <div class="ml-xf tcg-lf">
-                    <label for="number">Token</label>
-                   
-                    <strong v-if="type == 2">{{token}}</strong>
-                  </div>
+
                   <div>
                     <router-link to="/setting/edit-profile">
                       <button style="max-width: 200px; margin-top: 20px; cursor: pointer">
@@ -65,8 +61,9 @@
             </Tab>
             <Tab :isSelected="selected === 'Upgrade'">
               <h2 class="hc-x">Upgrade Account</h2>
+
               <Message :status="status" :message="message" />
-              <main>
+              <main v-if="usertype == 1">
                 <Message :status="status" :message="message" />
                 <form @submit.prevent="upgradeAccount">
                   <!--<div class="ml-xf">
@@ -83,7 +80,7 @@
                     <strong>Note:</strong>
                     <span style="font-size: 0.9rem">
                       Before you are eligible to upgrade your accountto merchant. You have
-                      to have atleast &#8358;10,000 in your wallet
+                      to have atleast &#8358;1,000 in your wallet
                     </span>
                   </div>
                   <div class="ml-xf">
@@ -92,6 +89,11 @@
                     </button>
                   </div>
                 </form>
+              </main>
+              <main v-else>
+                <h5 style="text-align: center; font-size: 0.8rem">
+                  You are already a merchant
+                </h5>
               </main>
             </Tab>
             <Tab :isSelected="selected === 'Manage'">
@@ -114,7 +116,7 @@
                     <label for="number">New Password</label>
                     <input
                       type="password"
-                      placeholder="Select your date of Birth"
+                      placeholder="Set a New Password"
                       v-model="npassword"
                       required
                       autocomplete=""
@@ -179,6 +181,7 @@ export default {
       color: "#0A1AA8",
       type: "",
       balance: "",
+      usertype: "",
     };
   },
 
@@ -200,9 +203,12 @@ export default {
       });
 
       this.balance = user.data.data.balance;
+      this.usertype = user.data.data.type;
       this.isLoading = false;
     } catch (e) {
-      e;
+      if (e.response.status === 401) {
+        this.$router.push("/panel/login");
+      }
     }
   },
   methods: {
@@ -210,54 +216,65 @@ export default {
       this.selected = tab;
     },
     async upgradeAccount() {
-      this.isDisabled = true;
-      this.btnText = "Loading";
+      if (this.usertype == 1) {
+        this.isDisabled = true;
+        this.btnText = "Loading";
 
-      if (this.balance >= "10000") {
-        const datas = JSON.parse(localStorage.getItem("user"));
-        this.token = datas.data.token;
-        const headers = {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + this.token,
-        };
-        const data = {
-          id: "1",
-        };
-        try {
-          const response = await axios.post(
-            `${process.env.VUE_APP_BASE_URL}api/updatemerachant`,
-            data,
-            {
-              headers: headers,
-            }
-          );
+        if (this.balance >= "1000") {
+          const datas = JSON.parse(localStorage.getItem("user"));
+          this.token = datas.data.token;
+          const headers = {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + this.token,
+          };
+          const data = {
+            m: "web",
+          };
+          try {
+            const response = await axios.post(
+              `${process.env.VUE_APP_BASE_URL}api/updatemerachant`,
+              data,
+              {
+                headers: headers,
+              }
+            );
 
-          this.status = true;
-          this.message = response.data.message;
-          this.btnText = "Upgrade";
-          this.interval = setTimeout(() => {
-            this.status = null;
-            this.$router.go();
-          }, 3000);
-        } catch (e) {
-          console.log(e);
-          if (e.response.status == 400 || e.response.status == 422) {
-            this.isDisabled = false;
-            this.status = false;
-            this.message = e.response.data.message;
-            this.btnPass = "Sign In";
-            this.isDisabled = false;
+            this.status = true;
+            this.message = response.data.message;
+            this.btnText = "Upgrade";
             this.interval = setTimeout(() => {
               this.status = null;
+              this.$router.go();
             }, 3000);
+          } catch (e) {
+            if (e.response.status == 400 || e.response.status == 422) {
+              this.isDisabled = false;
+              this.status = false;
+              this.message = e.response.data.message;
+              this.btnPass = "Sign In";
+              this.isDisabled = false;
+              this.interval = setTimeout(() => {
+                this.status = null;
+              }, 3000);
+            } else if (e.response.status === 401) {
+              if (e.response.status === 401) {
+                this.$router.push("/panel/login");
+              }
+            }
           }
+        } else {
+          this.status = false;
+          this.message = "You balance is low to upgrade your account";
+          this.interval = setTimeout(() => {
+            this.status = null;
+            this.isDisabled = false;
+          }, 3000);
         }
       } else {
         this.status = false;
-        this.message = "You balance is low to upgrade your account";
+        this.message = "You already a merchant";
         this.interval = setTimeout(() => {
           this.status = null;
-          this.isDisabled = false;
         }, 3000);
       }
     },
