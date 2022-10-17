@@ -25,7 +25,7 @@
                     <p>Amount</p>
                     <p>&#8358;{{ Intl.NumberFormat().format(amount) }}</p>
                   </div>
-                  <div class="each-de" v-if="usertype == 2">
+                  <div class="each-de">
                     <p>Commission</p>
                     <p>&#8358;{{ Intl.NumberFormat().format(com) }}</p>
                   </div>
@@ -149,7 +149,7 @@ export default {
 
         if (resp.data.data.status == false) {
           this.status = false;
-          this.message = resp.data.data.msg;
+          this.message = "Failed";
           this.setTimeout = setTimeout(() => {
             this.status = null;
             this.btnText = "Payment";
@@ -175,6 +175,7 @@ export default {
         } else if (e.response.status === 401) {
           if (e.response.status === 401) {
             this.$router.push("/panel/login");
+            localStorage.removeItem("user");
           }
         } else {
           this.status = false;
@@ -213,6 +214,7 @@ export default {
     } catch (e) {
       if (e.response.status === 401) {
         this.$router.push("/panel/login");
+        localStorage.removeItem("user");
       }
     }
     try {
@@ -223,7 +225,7 @@ export default {
       if (this.usertype == 1) {
         this.redam = this.amount - response.data.data.nairtime * 100;
         this.tfee = response.data.data.nairtime;
-        this.cairtime = response.data.data.caitime;
+        this.cairtime = response.data.data.ncaitime;
         this.com = parseInt(this.amount * this.cairtime);
       } else if (this.usertype == 2) {
         this.redam = this.amount - response.data.data.mairtime * 100;
@@ -234,6 +236,7 @@ export default {
     } catch (e) {
       if (e.response.status === 401) {
         this.$router.push("/panel/login");
+        localStorage.removeItem("user");
       }
     }
 
@@ -252,6 +255,7 @@ export default {
     } catch (e) {
       if (e.response.status === 401) {
         this.$router.push("/panel/login");
+        localStorage.removeItem("user");
       }
     }
   },

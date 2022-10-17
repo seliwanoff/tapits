@@ -22,6 +22,10 @@
                     <p class="bfn">Reference</p>
                     <p>{{ ref }}</p>
                   </div>
+                  <div class="each-de" v-if="type == 5 && status == 1">
+                    <p class="bfn">Token</p>
+                    <p>{{ token }}</p>
+                  </div>
                   <div class="each-de">
                     <p class="bfn">Amount</p>
                     <p>&#8358;{{ Intl.NumberFormat().format(amount) }}</p>
@@ -46,12 +50,16 @@
                     v-else-if="name != '' && network != userId && type != 4"
                   >
                     <p class="bfn">Receiver Name</p>
-                    <p>{{ name }}</p>
+                    <p v-if="network == 1">MTN</p>
+                    <p v-else-if="network == 2">Airtel</p>
+                    <p v-else-if="network == 3">9mobile</p>
+                    <p v-else-if="network == 4">GLO</p>
+                    <p v-else>{{ name }}</p>
                   </div>
 
                   <div class="each-de" v-if="plan && type != 4">
                     <p class="bfn">Service/Plan</p>
-                    <p>{{ network }}</p>
+                    <p>{{ plan }}</p>
                   </div>
                   <div class="each-de">
                     <p class="bfn">Receiver</p>
@@ -107,6 +115,7 @@ export default {
       commission: 0,
       userId: "",
       plan: "",
+      token: "",
     };
   },
   methods: {},
@@ -124,6 +133,7 @@ export default {
       (this.user = data.user),
       (this.commission = data.commission),
       (this.plan = data.plan);
+    this.token = data.token;
 
     const datas = JSON.parse(localStorage.getItem("user"));
 

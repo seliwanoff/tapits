@@ -37,10 +37,10 @@
                       &#8358;{{ Intl.NumberFormat().format(tfee) }}
                     </p>
                   </div>
-                  <div class="each-de" v-if="usertype == 2">
+                  <div class="each-de">
                     <p>Commission</p>
                     <p style="font-size: 0.8rem !important">
-                      &#8358;{{ Intl.NumberFormat().format(amount * cbill) }}
+                      &#8358;{{ Intl.NumberFormat().format(cbill) }}
                     </p>
                   </div>
                   <div class="each-de">
@@ -115,6 +115,8 @@ export default {
       tfee: 0.0,
       color: "#0A1AA8",
       cbill: "",
+      bill: "",
+      comm: "",
     };
   },
   methods: {
@@ -156,7 +158,7 @@ export default {
           );
           if (response.data.data.code > "000") {
             this.status = false;
-            this.message = response.data.data.response_description;
+            this.message = "Failed";
             this.setTimeout = setTimeout(() => {
               this.status = null;
               this.btnText = "Payment";
@@ -164,7 +166,7 @@ export default {
             }, 3000);
           } else {
             this.status = true;
-            this.message = response.data.data.response_description;
+            this.message = " Transaction Successful";
             this.setTimeout = setTimeout(() => {
               this.$router.push("/account/dashboard");
             }, 3000);
@@ -182,6 +184,7 @@ export default {
           } else if (e.response.status === 401) {
             if (e.response.status === 401) {
               this.$router.push("/panel/login");
+              localStorage.removeItem("user");
             }
           } else {
             this.status = false;
@@ -219,6 +222,7 @@ export default {
     } catch (e) {
       if (e.response.status === 401) {
         this.$router.push("/panel/login");
+        localStorage.removeItem("user");
       }
     }
     const billdata = JSON.parse(localStorage.getItem("bill"));
@@ -238,22 +242,29 @@ export default {
       if (this.usertype == "1" && this.type == "5") {
         this.redam = parseInt(this.amount) + parseInt(response.data.data.nelect);
         this.tfee = response.data.data.nelect;
+        this.cbill = response.data.data.ncbill;
+        this.comm = this.cbill * this.amount;
       } else if (this.usertype == "2" && this.type == "5") {
         this.redam = parseInt(this.amount) + parseInt(response.data.data.melect);
         this.tfee = response.data.data.melect;
         this.cbill = response.data.data.cbill;
+        this.comm = this.cbill * this.amount;
       } else if (this.usertype == "1" && this.type == "3") {
         this.redam = parseInt(this.amount) + parseInt(response.data.data.ncable);
         this.tfee = response.data.data.ncable;
+        this.cbill = response.data.data.ncbill;
+        this.comm = this.cbill * this.amount;
       } else if (this.usertype == "2" && this.type == "3") {
         this.redam = parseInt(this.amount) + parseInt(response.data.data.mcable);
         this.tfee = response.data.data.mcable;
         this.cbill = response.data.data.cbill;
+        this.comm = this.cbill * this.amount;
       }
       this.isLoading = false;
     } catch (e) {
       if (e.response.status === 401) {
         this.$router.push("/panel/login");
+        localStorage.removeItem("user");
       }
     }
   },
@@ -276,6 +287,7 @@ export default {
     } catch (e) {
       if (e.response.status === 401) {
         this.$router.push("/panel/login");
+        localStorage.removeItem("user");
       }
     }
   },

@@ -156,7 +156,7 @@
                       style="
                         width: 40px;
                         height: 40px;
-                        border: 1px solid black;
+                        border: 1px solid grey;
                         margin-right: 20px;
                         border-radius: 100%;
                       "
@@ -168,7 +168,7 @@
                       style="
                         width: 40px;
                         height: 40px;
-                        border: 1px solid black;
+                        border: 1px solid grey;
                         margin-right: 20px;
                         border-radius: 100%;
                       "
@@ -180,7 +180,7 @@
                       style="
                         width: 40px;
                         height: 40px;
-                        border: 1px solid black;
+                        border: 1px solid grey;
                         margin-right: 20px;
                         border-radius: 100%;
                       "
@@ -192,7 +192,7 @@
                       style="
                         width: 40px;
                         height: 40px;
-                        border: 1px solid black;
+                        border: 1px solid grey;
                         margin-right: 20px;
                         border-radius: 100%;
                       "
@@ -204,7 +204,7 @@
                       style="
                         width: 40px;
                         height: 40px;
-                        border: 1px solid black;
+                        border: 1px solid grey;
                         margin-right: 20px;
                         border-radius: 100%;
                       "
@@ -216,7 +216,7 @@
                       style="
                         width: 40px;
                         height: 40px;
-                        border: 1px solid black;
+                        border: 1px solid grey;
                         margin-right: 20px;
                         border-radius: 100%;
                       "
@@ -228,133 +228,42 @@
                       style="
                         width: 40px;
                         height: 40px;
-                        border: 1px solid black;
+                        border: 1px solid grey;
                         margin-right: 20px;
                         border-radius: 100%;
                       "
                       v-else-if="item.type == 4 && item.network != userId"
                     />
-                    <img
-                      src="../assets/image/aedc.jpg"
-                      alt=""
+                    <span
+                      v-else-if="item.type == 5"
                       style="
                         width: 40px;
                         height: 40px;
-                        border: 1px solid black;
+                        border: 1px solid grey;
                         margin-right: 20px;
                         border-radius: 100%;
+                        display: flex;
+                        justify-content: center;
                       "
-                      v-else-if="
-                        item.type == 5 &&
-                        item.network == 'Abuja Electricity Distribution Company- AEDC'
-                      "
-                    />
-                    <img
-                      src="../assets/image/kedc.png"
-                      alt=""
-                      style="
-                        width: 40px;
-                        height: 40px;
-                        border: 1px solid black;
-                        margin-right: 20px;
-                        border-radius: 100%;
-                      "
-                      v-else-if="
-                        item.type == 5 &&
-                        (item.network == 'Eko Electricity' ||
-                          item.network == 'Eko Electric Payment - EKEDC')
-                      "
-                    />
-                    <img
-                      src="../assets/image/ikedc.png"
-                      alt=""
-                      style="
-                        width: 40px;
-                        height: 40px;
-                        border: 1px solid black;
-                        margin-right: 20px;
-                        border-radius: 100%;
-                      "
-                      v-else-if="
-                        item.type == 5 && item.network == 'Ikeja Electric Payment - IKEDC'
-                      "
-                    />
-                    <img
-                      src="../assets/image/kedc.png"
-                      alt=""
-                      style="
-                        width: 40px;
-                        height: 40px;
-                        border: 1px solid black;
-                        margin-right: 20px;
-                        border-radius: 100%;
-                      "
-                      v-else-if="
-                        item.type == 5 && item.network == 'KEDCO - Kano Electric'
-                      "
-                    />
-                    <img
-                      src="../assets/image/phed.png"
-                      alt=""
-                      style="
-                        width: 40px;
-                        height: 40px;
-                        border: 1px solid black;
-                        margin-right: 20px;
-                        border-radius: 100%;
-                      "
-                      v-else-if="
-                        item.type == 5 && item.network == 'PHED - Port Harcourt Electric'
-                      "
-                    />
-                    <img
-                      src="../assets/image/jed.png"
-                      alt=""
-                      style="
-                        width: 40px;
-                        height: 40px;
-                        border: 1px solid black;
-                        margin-right: 20px;
-                        border-radius: 100%;
-                      "
-                      v-else-if="item.type == 5 && item.network == 'Jos Electric - JED'"
-                    />
-                    <img
-                      src="../assets/image/kaedc.png"
-                      alt=""
-                      style="
-                        width: 40px;
-                        height: 40px;
-                        border: 1px solid black;
-                        margin-right: 20px;
-                        border-radius: 100%;
-                      "
-                      v-else-if="
-                        item.type == 5 && item.network == 'Kaduna Electric - KAEDCO'
-                      "
-                    />
-                    <img
-                      src="../assets/image/ibedc.png"
-                      alt=""
-                      style="
-                        width: 40px;
-                        height: 40px;
-                        border: 1px solid black;
-                        margin-right: 20px;
-                        border-radius: 100%;
-                      "
-                      v-else-if="
-                        item.type == 5 &&
-                        item.network == 'IBEDC - Ibadan Electricity Distribution Company'
-                      "
-                    />
+                    >
+                      <i
+                        class="fa fa-lightbulb-o"
+                        style="
+                          color: black !important;
+                          font-size: 1.7rem;
+                          align-items: center;
+                          display: flex;
+                        "
+                      ></i>
+                    </span>
+
                     <img
                       src="../assets/image/dstv.png"
                       alt=""
                       style="
                         width: 40px;
                         height: 40px;
-                        border: 1px solid black;
+                        border: 1px solid grey;
                         margin-right: 20px;
                         border-radius: 100%;
                       "
@@ -366,7 +275,7 @@
                       style="
                         width: 40px;
                         height: 40px;
-                        border: 1px solid black;
+                        border: 1px solid grey;
                         margin-right: 20px;
                         border-radius: 100%;
                       "
@@ -378,7 +287,7 @@
                       style="
                         width: 40px;
                         height: 40px;
-                        border: 1px solid black;
+                        border: 1px solid grey;
                         margin-right: 20px;
                         border-radius: 100%;
                       "
@@ -396,7 +305,7 @@
                       style="
                         width: 40px;
                         height: 40px;
-                        border: 1px solid black;
+                        border: 1px solid grey;
                         margin-right: 20px;
                         border-radius: 100%;
                       "
@@ -408,7 +317,7 @@
                       style="
                         width: 40px;
                         height: 40px;
-                        border: 1px solid black;
+                        border: 1px solid grey;
                         margin-right: 20px;
                         border-radius: 100%;
                       "
@@ -423,8 +332,27 @@
                         ><span v-else-if="item.plan != null && item.type == 10"
                           >Account Upgrade</span
                         >
-                        <span v-else-if="item.type== 4">{{ item.plan }}</span>
-                        <span v-else>{{item.name}}</span>
+
+                        <span v-else-if="item.type == 4">{{ item.plan }}</span>
+                        <span v-else-if="item.type == 5"
+                          >{{ item.network }}{{ item.name }}</span
+                        >
+
+                        <span v-else>
+                          <span v-if="item.name == 1 || item.name == 'MTN'"
+                            >MTN {{ item.plan }}</span
+                          >
+                          <span v-else-if="item.name == 2 || item.name == 'AIRTEL'"
+                            >Airtel {{ item.plan }}</span
+                          >
+                          <span v-else-if="item.name == 3 || item.name == '9mobile'"
+                            >9mobile {{ item.plan }}</span
+                          >
+                          <span v-else-if="item.name == 4 || item.name == 'GLO'"
+                            >GLO {{ item.plan }}</span
+                          >
+                        </span>
+
                         <span>&#8358;{{ Intl.NumberFormat().format(item.amount) }}</span>
                       </div>
                       <div class="dwn-tpg">
@@ -445,25 +373,22 @@
 
                         <span
                           v-else-if="
-                            item.network != userId &&
-                            item.type == '4' &&
-                            item.status == 1
+                            item.network != userId && item.type == '4' && item.status == 1
                           "
-                          
                           >Sent</span
                         >
                         <span
                           v-else-if="
-                            item.network == userId &&
-                            item.type == '4' &&
-                            item.status == 1
+                            item.network == userId && item.type == '4' && item.status == 1
                           "
                           style="color: green"
                           >Recieved</span
                         >
                         <span v-else style="color: crimson">Failed</span>
 
-                        <span>{{ moment(item.updated_at).format("DD-MM-YYYY hh:mm") }}</span>
+                        <span>{{
+                          moment(item.updated_at).format("DD-MM-YYYY hh:mm")
+                        }}</span>
                       </div>
                     </div>
                   </div>
@@ -500,7 +425,6 @@
                         item.time,
                         item.fr,
                         item.plan
-
                       )
                     "
                   >
@@ -510,7 +434,7 @@
                       style="
                         width: 40px;
                         height: 40px;
-                        border: 1px solid black;
+                        border: 1px solid grey;
                         margin-right: 20px;
                         border-radius: 100%;
                       "
@@ -522,7 +446,7 @@
                       style="
                         width: 40px;
                         height: 40px;
-                        border: 1px solid black;
+                        border: 1px solid grey;
                         margin-right: 20px;
                         border-radius: 100%;
                       "
@@ -534,7 +458,7 @@
                       style="
                         width: 40px;
                         height: 40px;
-                        border: 1px solid black;
+                        border: 1px solid grey;
                         margin-right: 20px;
                         border-radius: 100%;
                       "
@@ -546,7 +470,7 @@
                       style="
                         width: 40px;
                         height: 40px;
-                        border: 1px solid black;
+                        border: 1px solid grey;
                         margin-right: 20px;
                         border-radius: 100%;
                       "
@@ -558,7 +482,7 @@
                       style="
                         width: 40px;
                         height: 40px;
-                        border: 1px solid black;
+                        border: 1px solid grey;
                         margin-right: 20px;
                         border-radius: 100%;
                       "
@@ -628,7 +552,7 @@ export default {
       selected: "Transaction",
       dragout: true,
       date: "",
-      userId:''
+      userId: "",
     };
   },
 
@@ -643,7 +567,19 @@ export default {
     setSelected(tab) {
       this.selected = tab;
     },
-    getEachTransaction(ref, status, amount, network, date, reciever, name, user, type,commission,plan) {
+    getEachTransaction(
+      ref,
+      status,
+      amount,
+      network,
+      date,
+      reciever,
+      name,
+      user,
+      type,
+      commission,
+      plan
+    ) {
       const data = {
         ref: ref,
         status: status,
@@ -654,8 +590,8 @@ export default {
         name: name,
         user: user,
         type: type,
-        commission:commission,
-        plan:plan
+        commission: commission,
+        plan: plan,
       };
       localStorage.setItem("data", JSON.stringify(data));
 
@@ -724,7 +660,7 @@ export default {
   async mounted() {
     const data = JSON.parse(localStorage.getItem("user"));
     this.token = data.data.token;
-    this.userId = data.data.data.id
+    this.userId = data.data.data.id;
     try {
       const transaction = await axios.get(
         `${process.env.VUE_APP_BASE_URL}api/gettransaction`,
@@ -734,9 +670,8 @@ export default {
           },
         }
       );
-     
+
       this.transactions = transaction.data.data.reverse();
-     
     } catch (e) {
       e;
     }

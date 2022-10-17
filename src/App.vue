@@ -1,9 +1,9 @@
 <template>
   <div>
     <div style="max-height: 800px">
-      <router-view ></router-view>
+      <router-view></router-view>
     </div>
-    <Footer v-if="$route.path!='/'"/>
+    <Footer v-if="$route.path != '/'" />
   </div>
 </template>
 
@@ -44,15 +44,9 @@ export default {
   async beforeCreate() {
     const user = localStorage.getItem("user");
 
-
-    if(user==null && this.$route.path =='/panel/login' && this.$route.path=='/panel/register' && this.$route.path=='/'){
-     this.$route$router.go()
-    }else if(user!=null && this.$route.path=='/panel/login/' && this.$route.path=='/panel/register'){
-      this.$router.push('/account/dashboard')
-    }else{
-      null
+    if (user == null && this.$route.path != "/") {
+      this.$router.push("/panel/login");
     }
-  
   },
 };
 </script>

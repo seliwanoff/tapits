@@ -181,6 +181,12 @@ export default {
       }
     },
   },
+  mounted() {
+    const user = localStorage.getItem("user");
+    if (user != null) {
+      this.$router.push("/account/dashboard");
+    }
+  },
 };
 </script>
 <style scoped>

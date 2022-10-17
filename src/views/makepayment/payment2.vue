@@ -34,11 +34,9 @@
                     <p>Transaction Fee</p>
                     <p style="font-size: 0.8rem !important">&#8358;{{ tfee }}</p>
                   </div>
-                  <div class="each-de" v-if="usertype == 2">
+                  <div class="each-de">
                     <p>commission</p>
-                    <p style="font-size: 0.8rem !important">
-                      &#8358;{{ amount * cdata }}
-                    </p>
+                    <p style="font-size: 0.8rem !important">&#8358;{{ comm }}</p>
                   </div>
                   <div class="each-de">
                     <p>Recipient</p>
@@ -108,6 +106,7 @@ export default {
       fullPage: true,
       color: "#0A1AA8",
       cdata: "",
+      ncdata: "",
     };
   },
   methods: {
@@ -147,7 +146,7 @@ export default {
           );
           if (resp.data.success == "false") {
             this.status = false;
-            this.message = resp.data.data.msg;
+            this.message = "Failed";
             this.setTimeout = setTimeout(() => {
               this.status = null;
               this.btnText = "Payment";
@@ -155,7 +154,7 @@ export default {
             }, 3000);
           } else {
             this.status = true;
-            this.message = resp.data.comment;
+            this.message = "Transaction Succesful";
             this.setTimeout = setTimeout(() => {
               this.$router.push("/account/dashboard");
             }, 3000);
@@ -164,7 +163,7 @@ export default {
           if (e.response.status == 400 || e.response.status == 422) {
             this.isDisabled = false;
             this.status = false;
-            this.message = e.response.data.message;
+            this.message = "Failed";
             this.btnText = "Payment";
             this.isDisabled = false;
             this.interval = setTimeout(() => {
@@ -173,6 +172,7 @@ export default {
           } else if (e.response.status === 401) {
             if (e.response.status === 401) {
               this.$router.push("/panel/login");
+              localStorage.removeItem("user");
             }
           } else {
             this.status = false;
@@ -214,7 +214,7 @@ export default {
           );
           if (resp.data.data.status == false) {
             this.status = false;
-            this.message = resp.data.data.msg;
+            this.message = "Failed";
             this.setTimeout = setTimeout(() => {
               this.status = null;
               this.btnText = "Payment";
@@ -222,7 +222,7 @@ export default {
             }, 3000);
           } else {
             this.status = true;
-            this.message = resp.data.data.msg;
+            this.message = "Transaction Sucessful";
             this.setTimeout = setTimeout(() => {
               this.$router.push("/account/dashboard");
             }, 3000);
@@ -231,7 +231,7 @@ export default {
           if (e.response.status == 400 || e.response.status == 422) {
             this.isDisabled = false;
             this.status = false;
-            this.message = e.response.data.message;
+            this.message = "Failed";
             this.btnText = "Payment";
             this.isDisabled = false;
             this.interval = setTimeout(() => {
@@ -240,6 +240,7 @@ export default {
           } else if (e.response.status === 401) {
             if (e.response.status === 401) {
               this.$router.push("/panel/login");
+              localStorage.removeItem("user");
             }
           } else {
             this.status = false;
@@ -277,6 +278,7 @@ export default {
     } catch (e) {
       if (e.response.status === 401) {
         this.$router.push("/panel/login");
+        localStorage.removeItem("user");
       }
     }
 
@@ -285,23 +287,21 @@ export default {
         `${process.env.VUE_APP_BASE_URL}api/getmanagement`
       );
       if (this.usertype == 1) {
-        this.redam = parseInt(this.amount - response.data.data.ndata * 100);
+        this.redam = parseInt(this.amount - response.data.data.ncdata * 100);
         this.tfee = response.data.data.ndata;
-        this.cdata = response.data.data.cdata;
+        this.comm = response.data.data.ncdata * this.amount;
       } else {
         this.redam = parseInt(this.amount - response.data.data.mdata * 100);
         this.tfee = response.data.data.mdata;
-        this.cdata = response.data.data.cdata;
+        this.comm = response.data.data.cdata * this.amount;
       }
 
       if (response.data.data.mtnapi == 1 && this.network_id == 1) {
         this.name = billdata.plan;
         this.mtnapi = response.data.data.mtnapi;
-        this.cdata = response.data.data.cdata;
       } else {
         this.name = billdata.name;
         this.mtnapi = response.data.data.mtnapi;
-        this.cdata = response.data.data.cdata;
       }
       this.isLoading = false;
     } catch (e) {
@@ -326,6 +326,7 @@ export default {
     } catch (e) {
       if (e.response.status === 401) {
         this.$router.push("/panel/login");
+        localStorage.removeItem("user");
       }
     }
   },

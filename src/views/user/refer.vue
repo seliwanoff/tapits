@@ -134,6 +134,7 @@ export default {
       } catch (e) {
         if (e.response.status === 401) {
           this.$router.push("/panel/login");
+          localStorage.removeItem("user");
         }
       }
     },
@@ -153,6 +154,7 @@ export default {
     } catch (e) {
       if (e.response.status === 401) {
         this.$router.push("/panel/login");
+        localStorage.removeItem("user");
       }
     }
     try {
@@ -171,6 +173,7 @@ export default {
     } catch (e) {
       if (e.response.status === 401) {
         this.$router.push("/panel/login");
+        localStorage.removeItem("user");
       }
     }
     this.isLoading = false;
